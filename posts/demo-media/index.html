@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="theme-color" content="#F4B942"><link rel="icon" href="/lives-mobile-website/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous"><title>Lives Mobile 演示视频来源与授权说明 | Paper Blog</title><style>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script>(()=>{try{const v=localStorage.getItem('paper-theme');if(v==='light'||v==='dark'){document.documentElement.dataset.theme=v}}catch(_e){}})();</script><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="theme-color" content="#F4B942"><link rel="icon" href="/lives-mobile-website/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous"><title>Lives Mobile 演示视频来源与授权说明 | Paper Blog</title><style>
 :root {
   --primary: #F4B942;
   --bg: #ffffff;
@@ -8,9 +8,21 @@
   --link-underline: #374151;
   --border: #e5e7eb;
   --code-bg: #f9fafb;
+  --image-radius: 8px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #09090b;
+  --text: #e4e4e7;
+  --subtext: #71717a;
+  --link: #e4e4e7;
+  --link-underline: #d1d5db;
+  --border: #27272a;
+  --code-bg: #18181b;
+  color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --bg: #09090b;
     --text: #e4e4e7;
     --subtext: #71717a;
@@ -18,8 +30,12 @@
     --link-underline: #d1d5db;
     --border: #27272a;
     --code-bg: #18181b;
+    color-scheme: dark;
   }
 }
+/* 只在切换主题的那一瞬间挂上 .theme-transition，避免影响 hover 等既有过渡。 */
+:root.theme-transition *, :root.theme-transition *::before, :root.theme-transition *::after { transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out, fill 0.4s ease-in-out, stroke 0.4s ease-in-out !important; }
+@media (prefers-reduced-motion: reduce) { :root.theme-transition *, :root.theme-transition *::before, :root.theme-transition *::after { transition: none !important; } }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -57,6 +73,15 @@ blockquote { border-left: 2px solid var(--primary); padding-left: 1rem; color: v
 footer { margin-top: 4rem; text-align: center; }
 .footer-brand { font-family: Georgia, Cambria, Baskerville, "Times New Roman", serif; font-style: italic; font-size: 0.725rem; letter-spacing: 0.04em; color: var(--text); text-decoration: none; opacity: 0.12; transition: opacity 0.2s ease, color 0.2s ease; }
 .footer-brand:hover { opacity: 0.5; color: var(--primary); }
+.footer-row { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; }
+.footer-theme { display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; padding: 0; border: 0; border-radius: 999px; background: none; color: var(--text); opacity: 0.12; cursor: pointer; transition: opacity 0.2s ease, color 0.2s ease; }
+.footer-theme:hover { opacity: 0.5; color: var(--primary); }
+.footer-theme:focus-visible { opacity: 0.6; outline: 2px solid var(--primary); outline-offset: 2px; }
+.footer-theme svg { display: none; width: 0.8rem; height: 0.8rem; }
+.footer-theme .theme-icon-auto { display: block; }
+:root[data-theme="light"] .footer-theme .theme-icon-auto, :root[data-theme="dark"] .footer-theme .theme-icon-auto { display: none; }
+:root[data-theme="light"] .footer-theme .theme-icon-light { display: block; }
+:root[data-theme="dark"] .footer-theme .theme-icon-dark { display: block; }
 .back-icon { position: absolute; left: -2rem; top: 0.41rem; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; color: var(--subtext); text-decoration: none; }
 .back-icon:hover { color: var(--primary); }
 
@@ -88,7 +113,7 @@ footer { margin-top: 4rem; text-align: center; }
 .markdown tbody tr:nth-child(even) td { background-color: var(--code-bg); }
 .markdown hr { border: 0; border-top: 1px solid var(--border); margin: 2.5rem 0; }
 .markdown :not(pre) > code { white-space: nowrap; }
-.markdown img { display: block; max-width: 100%; height: auto; margin-inline: auto; border: 1px solid var(--border); border-radius: 8px; cursor: zoom-in; }
+.markdown img { display: block; max-width: 100%; height: auto; margin-inline: auto; border: 1px solid var(--border); border-radius: var(--image-radius, 8px); cursor: zoom-in; }
 .markdown img[data-align="left"], .markdown img.align-left { margin-left: 0; margin-right: auto; }
 .markdown img[data-align="right"], .markdown img.align-right { margin-left: auto; margin-right: 0; }
 .markdown img[data-align="center"], .markdown img.align-center { margin-inline: auto; }
@@ -186,7 +211,40 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .syntax-highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .syntax-highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .syntax-highlight .il { color: #666 } /* Literal.Number.Integer.Long */
-.syntax-highlight { background: transparent !important; }</style></head><body><div class="container"><main><article><h1><a href="javascript:history.back()" class="back-icon" title="返回上一页" aria-label="返回上一页"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>Lives Mobile 演示视频来源与授权说明</h1><p class="post-date">2026-09-28</p><div class="markdown"><p>更新日期：2026 年 9 月 28 日</p>
+.syntax-highlight { background: transparent !important; }
+.paper-video { position: relative; display: block; width: 130%; max-width: calc(100vw - 3rem); aspect-ratio: var(--video-ratio, 16 / 9); margin-left: 50%; transform: translateX(-50%); overflow: hidden; isolation: isolate; border: 0; outline: 0; box-shadow: none; border-radius: var(--video-radius, 0px); background: transparent; color: #fff; }
+.paper-video[data-align="left"] { margin-left: 0; transform: none; }
+.paper-video[data-align="right"] { margin-left: 100%; transform: translateX(-100%); }
+.paper-video video, .paper-video iframe { display: block; width: 100%; height: 100%; object-fit: contain; border: 0; }
+.paper-video iframe { position: absolute; top: -1px; left: -1px; width: calc(100% + 2px); height: calc(100% + 2px); }
+.paper-video .video-start, .paper-video .video-controls, .paper-video .video-status, .paper-video .video-fallback { display: none; }
+.paper-video button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #fff; cursor: pointer; }
+.paper-video button:hover { background: rgba(255,255,255,.16); }
+.paper-video button:focus-visible, .paper-video input:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.paper-video .video-icon { width: 20px; height: 20px; }
+.paper-video .video-icon-pause, .paper-video .video-icon-sound { display: none; }
+.paper-video[data-playing="true"] .video-toggle .video-icon-play, .paper-video[data-muted="false"] .video-icon-muted { display: none; }
+.paper-video[data-playing="true"] .video-toggle .video-icon-pause, .paper-video[data-muted="false"] .video-icon-sound { display: block; }
+.paper-video[data-enhanced] .video-controls { display: flex; position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); align-items: center; gap: 8px; width: calc(100% - 32px); max-width: 460px; padding: 6px 10px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; background: rgba(25,25,28,.78); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 4px 24px rgba(0,0,0,.16); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.paper-video[data-enhanced] .video-start { display: inline-flex; position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; background: rgba(25,25,28,.65); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.2); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.paper-video .video-start .video-icon { width: 28px; height: 28px; }
+.paper-video[data-playing="true"] .video-start { display: none; }
+@media (hover: hover) { .paper-video:hover .video-controls, .paper-video:hover .video-start { opacity: 1; pointer-events: auto; } }
+.paper-video:has(:focus-visible) .video-controls, .paper-video:focus-visible .video-controls, .paper-video:has(:focus-visible) .video-start, .paper-video:focus-visible .video-start { opacity: 1; pointer-events: auto; }
+@media (hover: none) { .paper-video[data-recent] .video-controls, .paper-video:not([data-playing="true"]) .video-start { opacity: 1; pointer-events: auto; } }
+.paper-video .video-time { flex-shrink: 0; font-size: 11px; font-variant-numeric: tabular-nums; color: #f4f4f5; }
+.paper-video .video-seek { flex: 1; min-width: 24px; width: 100%; height: 24px; margin: 0; accent-color: #fff; cursor: pointer; }
+.paper-video[data-error] .video-status { display: block; position: absolute; top: 35%; left: 12px; right: 12px; text-align: center; font-size: .875rem; }
+.paper-video[data-error] .video-start, .paper-video[data-error] .video-controls { display: none; }
+.paper-video[data-error] .video-fallback { display: block; position: absolute; top: 55%; width: 100%; text-align: center; color: #fff; font-size: .875rem; }
+.missing-video { display: inline-block; padding: .5rem .75rem; border: 1px dashed var(--border); border-radius: 6px; color: var(--subtext); background: var(--code-bg); }
+.paper-video:fullscreen { width: 100%; max-width: none; height: 100%; margin: 0; transform: none; border-radius: 0; aspect-ratio: auto; background: #111; }
+body.paper-video-expanded { overflow: hidden; }
+.paper-video[data-expanded] { position: fixed; inset: 0; z-index: 1000; width: 100vw !important; max-width: none; height: 100dvh; margin: 0; transform: none; border-radius: 0; aspect-ratio: auto; background: #111; }
+@media (max-width: 640px) { .paper-video { width: 100%; max-width: 100%; } }
+@media (max-width: 480px) { .paper-video[data-enhanced] .video-controls { bottom: 8px; gap: 4px; width: calc(100% - 16px); padding: 4px 6px; } .paper-video button { width: 32px; height: 32px; } .paper-video .video-time { font-size: 10px; } .paper-video[data-enhanced] .video-start { width: 48px; height: 48px; } }
+@media (prefers-reduced-motion: reduce) { .paper-video .video-controls { transition: none; } }
+</style></head><body><div class="container"><main><article><h1><a href="/lives-mobile-website/" class="back-icon" title="返回首页" aria-label="返回首页"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>Lives Mobile 演示视频来源与授权说明</h1><p class="post-date">2026-09-28</p><div class="markdown"><p>更新日期：2026 年 9 月 28 日</p>
 <div class="markdown-blank-line" aria-hidden="true"></div>
 <p>Lives Mobile 的新手引导使用开发者自行拍摄的北极熊视频（约 5.8 秒）。用户可以在引导中导入、编辑并将它导出为 Live Photo。购买页的部分功能预览使用了从 Pexels 下载的视频；这些视频不会作为新手引导的可导出素材。其作者和作品页面如下：</p>
 <div class="markdown-blank-line" aria-hidden="true"></div>
@@ -203,4 +261,4 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p>App 不提供上述 Pexels 视频的原片下载入口，也不会把它们作为引导素材供用户导出。视频的著作权仍归相应权利人；Pexels 许可也不当然涵盖画面中可能涉及的肖像、商标等其他权利。具体许可范围以 Pexels 官方现行条款为准。</p>
 <div class="markdown-blank-line" aria-hidden="true"></div>
 <p>如果您是上述视频的作者或相关权利人，或者对来源与使用方式有任何疑问，请联系 <a href="mailto:ohmyangboy@gmail.com" target="_blank" rel="noopener noreferrer">ohmyangboy@gmail.com</a>。我们会核查并妥善处理。</p>
-</div></article></main></div><footer><a href="https://ohmyangboy.github.io/paper-blog/" target="_blank" rel="noopener noreferrer" class="footer-brand">Paper Blog</a></footer><dialog class="image-lightbox" aria-label="图片大图预览"><button class="image-lightbox-close" type="button" aria-label="关闭大图">×</button><img alt=""></dialog><script>(()=>{const d=document.querySelector('.image-lightbox');const v=d.querySelector('img');document.addEventListener('click',e=>{const i=e.target.closest?.('.markdown img');if(!i||i.closest('a'))return;const s=i.currentSrc||i.src;if(typeof d.showModal!=='function'){window.open(s,'_blank','noopener');return}v.src=s;v.alt=i.alt||'';d.showModal()});d.querySelector('.image-lightbox-close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.addEventListener('close',()=>{v.removeAttribute('src')})})();</script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});"></script></body></html>
+</div></article></main></div><footer><span class="footer-row"><a href="https://ohmyangboy.github.io/paper-blog/" target="_blank" rel="noopener noreferrer" class="footer-brand">Paper Blog</a><button type="button" class="footer-theme" aria-label="跟随系统主题" title="跟随系统主题" data-label-light="浅色主题" data-label-dark="深色主题" data-label-auto="跟随系统主题"><svg class="theme-icon theme-icon-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.9 4.9l1.4 1.4"/><path d="M17.7 17.7l1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.9 19.1l1.4-1.4"/><path d="M17.7 6.3l1.4-1.4"/></svg><svg class="theme-icon theme-icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.8A8.5 8.5 0 1 1 9.2 3.5a7 7 0 0 0 11.3 11.3z"/></svg><svg class="theme-icon theme-icon-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8.5 20.5h7"/></svg></button></span></footer><dialog class="image-lightbox" aria-label="图片大图预览"><button class="image-lightbox-close" type="button" aria-label="关闭大图">×</button><img alt=""></dialog><script>(()=>{const d=document.querySelector('.image-lightbox');const v=d.querySelector('img');document.addEventListener('click',e=>{const i=e.target.closest?.('.markdown img');if(!i||i.closest('a'))return;const s=i.currentSrc||i.src;if(typeof d.showModal!=='function'){window.open(s,'_blank','noopener');return}v.src=s;v.alt=i.alt||'';d.showModal()});d.querySelector('.image-lightbox-close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d)d.close()});d.addEventListener('close',()=>{v.removeAttribute('src')})})();</script><script>(()=>{const b=document.querySelector('.footer-theme');if(!b)return;const root=document.documentElement;const order=['light','dark','auto'];let current='auto',timer=0;try{const stored=localStorage.getItem('paper-theme');if(stored==='light'||stored==='dark')current=stored}catch(_e){}const apply=()=>{if(current==='auto'){root.removeAttribute('data-theme')}else{root.dataset.theme=current}const label=b.dataset['label'+current[0].toUpperCase()+current.slice(1)]||b.dataset.labelAuto;b.setAttribute('aria-label',label);b.setAttribute('title',label)};const paint=()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches){apply();return}clearTimeout(timer);root.classList.add('theme-transition');apply();timer=setTimeout(()=>root.classList.remove('theme-transition'),420)};b.addEventListener('click',()=>{current=order[(order.indexOf(current)+1)%order.length];try{localStorage.setItem('paper-theme',current)}catch(_e){}paint()});const media=matchMedia('(prefers-color-scheme: dark)');if(media.addEventListener)media.addEventListener('change',()=>{if(current==='auto')paint()});apply()})();</script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});"></script></body></html>
